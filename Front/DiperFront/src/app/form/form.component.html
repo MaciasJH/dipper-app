@@ -8,276 +8,33 @@
 	<title>Diper</title>
 </head>
 <header style="background-color: #ffffff;">
-	<div class="col-sm-12" style="background-color: #ffffff;">
-		<div class="col-sm-4">
-			<img src="media/images/logodiper.png" alt="Diper" style="padding: 15px; height: 65%; width: 65%;">
-		</div>
-		<div class="container col-sm-1 col-sm-offset-6" style="top: 30px;">
-			<table style="background-color: #ffffff; border: 1px solid black; height: 50px; width: 150px; text-align: center;">
-				<tbody>
-					<tr>
-						<th style="border: 1px solid black; text-align: center; background-color: #e6f6d5">PEDIDO</th>
-						<th style="border: 1px solid black; text-align: center; background-color: #e6f6d5">FECHA</th>
-					</tr>
-					<tr>
-						<td style="border: 1px solid black;">7166</td>
-						<td style="border: 1px solid black;">13/03/2018</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+	<div class="clase1" style="background-color: #ffffff;">
+		<div class="clase2">
+			<img src="assets/logodiper.png" alt="Diper" style="padding: 15px; height: 65%; width: 65%;">
+    </div>
+    <div class="clase3" style="top: 20px;">
+      <form >
+        <mat-form-field appearance="outline">
+          <mat-label>Pedido</mat-label>
+          <input matInput placeholder="Fecha" value="{{jsfecha}}" readonly="true">
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="clase4" style="top: 20px;">
+        <form >
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input matInput placeholder="0" value="{{jsfecha}}" readonly="true">
+        </mat-form-field>
+      </form>
+    </div>
+    
+  
+  </div>
 </header>
 
 <body style="background-color: #e6ffcc;">
-	<div class="container col-sm-10 col-sm-offset-1" style="margin-top: 15px;">
-		<!-- Primera tabla -->
-		<table class="table table-responsive" style="background-color: #ffffff;">
-			<tbody>
-				<tr>
-					<td class="col-sm-1">CLIENTE</td>
-					<td class="col-sm-4">
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-					<td class="col-sm-1">R.F.C.</td>
-					<td class="col-sm-4">
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-				</tr>
-				<tr>
-					<td>DOMICILIO</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-					<td>COLONIA</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-				</tr>
-				<tr>
-					<td>CIUDAD </td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-					<td>ESTADO</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-				</tr>
-				<tr>
-					<td>TELEFONO</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-					<td>PERSONA</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-				</tr>
-				<tr>
-					<td>CONSIGNAR</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-					<td>E-MAIL</td>
-					<td>
-						<input type="text" class="form-control" id="descripcion">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-		
-		<!-- Segunda tabla -->
-	<div class="container col-sm-10 col-sm-offset-1">
-		<table class="table table-responsive" style="background-color: #ffffff;">
-			<thead>
-				<tr>
-					<th style="text-align: center;">CANT</th>
-					<th style="text-align: center;">DESCRIPCION</th>
-					<th style="text-align: center;">PRECIO UNIT.</th>
-					<th style="text-align: center;">IMPORTE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="col-sm-1">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>1</option>
-							    <option>2</option>
-							    <option>3</option>
-							    <option>4</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-7">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>Buro Miletto</option>
-							    <option>Cabecera Miletto Mat</option>
-							    <option>Cabecera Aviano</option>
-							    <option>BuroAviano</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="preciounit">
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="importe">
-					</td>
-				</tr>
-				
-				<tr>
-					<td class="col-sm-1">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>1</option>
-							    <option>2</option>
-							    <option>3</option>
-							    <option>4</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-7">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>Buro Miletto</option>
-							    <option>Cabecera Miletto Mat</option>
-							    <option>Cabecera Aviano</option>
-							    <option>BuroAviano</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="preciounit">
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="importe">
-					</td>
-				</tr>
-				<tr>
-					<td class="col-sm-1">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>1</option>
-							    <option>2</option>
-							    <option>3</option>
-							    <option>4</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-7">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>Buro Miletto</option>
-							    <option>Cabecera Miletto Mat</option>
-							    <option>Cabecera Aviano</option>
-							    <option>BuroAviano</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="preciounit">
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="importe">
-					</td>
-				</tr>
-				<tr>
-					<td class="col-sm-1">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>1</option>
-							    <option>2</option>
-							    <option>3</option>
-							    <option>4</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-7">
-						<div class="form-group">
-							<select class="form-control" id="sel1">
-							    <option>Buro Miletto</option>
-							    <option>Cabecera Miletto Mat</option>
-							    <option>Cabecera Aviano</option>
-							    <option>BuroAviano</option>
-							</select>
-						</div>
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="preciounit">
-					</td>
-					<td class="col-sm-1">
-						<input type="text" class="form-control" id="importe">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 	
-	<div class="container col-sm-10 col-sm-offset-1">
-		<div class="col-sm-8">
-			<label for="observaciones">OBSERVACIONES:</label>
-	 		<textarea class="form-control" rows="8" id="observacion"></textarea>
- 		</div>
- 		<div class="container">
- 			<div class="col-sm-3 col-sm-offset-1">
-			<table class="table table-responsive" style="background-color: #ffffff;">
-				<tbody>
-					<tr>
-						<th style="border: 1px solid white; background-color: #e6f6d5">SUB. TOTAL</th>
-						<td ></td>
-					</tr>
-					<tr>
-						<th style="border: 1px solid white; background-color: #e6f6d5">DESCUENTO</th>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-			</div>
-			<div class="col-sm-3 col-sm-offset-1">
-			<table class="table table-responsive" style="background-color: #ffffff;">
-				<tbody>
-					<tr>
-						<th style="border: 1px solid white; background-color: #e6f6d5">SUB. TOTAL</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th style="border: 1px solid white; background-color: #e6f6d5">I.V.A.</th>
-						<td></td>
-					</tr>
-					<tr>
-						<th style="border: 1px solid white; background-color: #e6f6d5">TOTAL</th>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-			</div>
-		</div>
-	</div>
-	
-	<!-- FIRMA -->
-	<div class="container col-sm-10 col-sm-offset-1">
-		<div class="container col-sm-2 col-sm-offset-3" style="text-align: center;">
-			<table>
-				<tbody>
-					<tr>
-						<td><canvas id="sheet" width="250" height="150"></canvas></td>
-					</tr>
-					<tr>
-						<td><label for="observaciones">Firma</label></td>
-						
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="container col-sm-2 col-sm-offset-2" style="top: 50px;">
-			<button type="button" class="btn btn-primary btn-lg" style="background-color: #f2f2f2; color: black;">Realizar Pedido</button>
-		</div>
-	</div>
-	<br>
 </body>
 <footer>
 

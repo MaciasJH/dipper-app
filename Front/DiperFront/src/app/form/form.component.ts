@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '../../../node_modules/@angular/common';
 
 @Component({
   selector: 'app-form',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
-
-  constructor() { }
-
+  fecha = new Date();
+  jsfecha = '';
+  constructor() { 
+    this.jsfecha = formatDate(this.fecha, 'dd/MM/yyyy', 'en-US', '-0500');
+  }
+  
   ngOnInit() {
   }
-
 }
