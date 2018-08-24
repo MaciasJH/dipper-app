@@ -10,8 +10,7 @@
 .clase1{
     position: relative;
   min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
+
   float: left;
   width: 100%;
   }
@@ -27,11 +26,12 @@
   .clase3{
     position: relative;
   min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 10px;
+  padding-left: 10px;
   float: left;
-  width: 8.3333333%;
-  margin-left:28%;
+  width: 39.3333333%;
+  
+  margin-left:20%;
   }
   .clase4{
     position: relative;
@@ -39,6 +39,15 @@
   padding-right: 15px;
   padding-left: 15px;
   float: left;
-  width: 8.3333333%;
-  margin-left:6.5%;
+  width: 6.3333333%;
+
+  }
+
+  .clase5{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 6%;
+    margin-right: 6%;
+    align-content: center;
+    width: 85%;
   }
