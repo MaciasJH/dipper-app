@@ -50,4 +50,5 @@
     margin-right: 6%;
     align-content: center;
     width: 85%;
+    border: 4px solid #e6ffcc; outline-style: solid; outline-color:black;
   }

@@ -6,6 +6,7 @@ import { FormComponent } from './form/form.component';
 import {MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatGridListModule, MatSelectModule} from '@angular/material';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,6 +16,7 @@ import { LayoutModule } from '@angular/cdk/layout';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule, ReactiveFormsModule,
     MatButtonModule, MatCheckboxModule, LayoutModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatGridListModule, MatSelectModule],
   providers: [],
   bootstrap: [AppComponent]

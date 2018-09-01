@@ -44,24 +44,30 @@
 
 <body style="background-color: #e6ffcc; height: 100%;">
   <br><br><br><br><br><br><br><br><br><br><br><br>
-  <div class="clase5" style="background-color: white; top:20px" >
+  <div class="clase5" style="background-color: white; top:20px; " >
+    <label style="top: 20px; width:40%; font-size:26px; font-weight: bold">Datos de Cliente</label>
     
-    <h2 style="padding-top:20px">Datos de Cliente</h2>
+        <mat-form-field appearance="standard" style="top:10px;margin-left: 50%; width:17% !important; padding-right: 4%">
+          <mat-label>No. Cliente</mat-label>
+          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+        </mat-form-field>
+        <button color=primary mat-flat-button (click)="visibilidad = !visibilidad">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
+        
     <hr>
     
     <br><br>
-    <form >
+    <form name="datos_Cliente" *ngIf="visibilidad">
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Cliente</mat-label>
-      <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+      <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
       <mat-label>RFC</mat-label>
-      <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+      <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Domicilio</mat-label>
-      <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+      <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
         <mat-label>Colonia</mat-label>
@@ -83,23 +89,23 @@
         </mat-form-field>
         <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
             <mat-label>Estado</mat-label>
-            <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+            <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
           </mat-form-field>
           <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
               <mat-label>Telefono</mat-label>
-              <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+              <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
             </mat-form-field>
             <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
                 <mat-label>Persona</mat-label>
-                <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+                <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
               </mat-form-field>
               <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
                   <mat-label>Consignar</mat-label>
-                  <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+                  <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
                 </mat-form-field>
                 <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
                     <mat-label>E-mail</mat-label>
-                    <input matInput placeholder="Fecha" value="Nombre" readonly="false">            
+                    <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
                   </mat-form-field>                  
     </form>
   </div>
@@ -107,11 +113,25 @@
   <br><br>
   <div class="clase5" style="background-color: white; top:20px" >
     
-    <h2 style="padding-top:20px">Pedido</h2>
+      <label style="top: 20px; width:40%; font-size:26px; font-weight: bold">Pedido</label>
+    
+      <mat-form-field appearance="standard" style="top:10px;margin-left: auto; width:17% !important; padding-right: 4%;visibility: hidden">
+        <mat-label>No. Cliente</mat-label>
+        <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
+      </mat-form-field>
+      
+      <button style="margin-left: 10px" mat-flat-button (click)="muebles[muebles.length] = muebles.length">Agregar Item</button>
+      <button color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length)" *ngIf="muebles.length>0">Eliminar Item</button>    
     <hr>
     
     <br><br>
-
+    <div *ngFor="let index of muebles">
+      <label>
+        Alias:
+        <input type="text" [formControlName]="i">
+      </label>  
+        Hola {{index+1}}
+    </div>
     </div>
   
 </body>
