@@ -35,7 +35,7 @@
   </div>
 </header>
 
-<body style="background-color: #e6ffcc; height: 100%;">
+<body style="background-color: #c7e6a7; height: 100%;">
   <br><br><br>
   <div class="clase5" style="background-color: white; top:20px; " >
     <div fxLayout="row" fxLayoutAlign="start center">
@@ -47,10 +47,10 @@
         </mat-form-field>
         <button fxFlex="10" color=accent mat-flat-button (click)="visibilidad = !visibilidad">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
       </div>
-    
-    
-    <form name="datos_Cliente" *ngIf="visibilidad">
       <hr>
+    <br>
+    <form name="datos_Cliente" *ngIf="visibilidad">
+    
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Cliente</mat-label>
       <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
@@ -114,44 +114,80 @@
         <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
       </mat-form-field>
       
-      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles[muebles.length] = muebles.length">Agregar Item</button>
-      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length)" *ngIf="muebles.length>0">Eliminar Item</button>    
+      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles[muebles.length] = muebles.length">+</button>
+      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length)" *ngIf="muebles.length>0">-</button>    
       </div>
       <hr>
     
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
+      <div fxFlex="1"></div>
+      <div style="padding-right:5%"fxFlex="8">No.</div>
+      <div style="padding-right:5%"fxFlex="15">Cant.</div>
+      <div style="padding-right:5%"fxFlex="45">Descripcion</div>
+      <div style="padding-right:5%"fxFlex="15">Precio Unit.</div>
+      <div fxFlex="15">Importe</div>
+      <div fxFlex="1"></div>
+      
+    </div>
+    <hr>
     <div *ngFor="let index of muebles">
-      <div fxLayout="row" fxLayoutAlign="space-evenly center" >
-      
-        <mat-form-field fxFlex="20" appearance="standard" style="padding-right: 6%">
-          <mat-label>Cliente</mat-label>
-          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+      <div fxLayout="row" fxLayoutAlign="space-evenly center">
+        <div fxFlex="1"></div>
+        <div fxFlex="8"style="text-align:center;padding-right:5%">{{index+1}}</div>
+        <mat-form-field fxFlex="15" appearance="fill"style="padding-right:5% ">          
+          <input matInput placeholder="Cantidad" type="number" value="1" readonly="false">            
         </mat-form-field>
-        <mat-form-field fxFlex="50" appearance="standard" style="padding-right: 6%">
-          <mat-label>RFC</mat-label>
-          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+        <mat-form-field fxFlex="45" appearance="fill"style="padding-right:5%;">          
+          <input matInput placeholder="Descripcion" type="text" value="Buro" readonly="true">            
         </mat-form-field>
-        <mat-form-field fxFlex="20" appearance="standard" style="padding-right: 6%">
-          <mat-label>Domicilio</mat-label>
-          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+        <mat-form-field fxFlex="15" appearance="fill"style="padding-right:5%">
+          <input matInput placeholder="Precio" value="100" readonly="true">            
         </mat-form-field>
-      
-      
-        <label fxFlex>
+        <mat-form-field fxFlex="15" appearance="fill">
+          <input matInput placeholder="Importe" value="100" readonly="true">            
+        </mat-form-field>
+        <div fxFlex="1"></div>
+      </div>
+        <!--<label fxFlex="20">
           Alias:
           <input type="text" [formControlName]="i">
         </label>  
-          Hola {{index+1}}
-  
 
+      -->
 
+        
+      
+      
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
+      <div fxFlex="1"></div>
+      <div style="padding-right:5%"fxFlex="8"></div>
+      <div style="padding-right:5%"fxFlex="15"></div>
+      <div style="padding-right:5%"fxFlex="45"></div>
+      <div style="padding-right:5%"fxFlex="15">Importe Total:</div>
+      <div fxFlex="15">$$$</div>
+      <div fxFlex="1"></div>
+      
+    </div>
+    <hr>
+
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+      <div fxFlex="1"></div>
+      <div fxFlex="8"style="text-align:center;padding-right:5%"></div>
+      <div fxFlex="15" style="padding-right:5% ">          
+      </div>  
+      <div fxFlex="40"style="padding-right:5%;">          
       </div>
-      
-      
+      <div fxFlex="15"style="padding-right:5%;">          
+      </div>
+      <button color=accent style="text-align: center" mat-flat-button>Enviar</button>
+      <div fxFlex="1"></div>
     </div>
+<br>
     </div>
   
+ <br><br><br>
 </body>
 <footer>
-
 </footer>
 </html>
