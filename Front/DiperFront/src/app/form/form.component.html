@@ -8,32 +8,25 @@
 	<title>Diper</title>
 </head>
 <header style="background-color: #ffffff;">
-	<div class="clase1" style="background-color: #ffffff;">
-		<div class="clase2" style="top:20px">
-			<img src="assets/logodiper.png" alt="Diper" style="padding: 15px; height: 75%; width: 75%;">
+	<div fxLayout="row" fxLayoutAlign="start center" class="clase1" style="background-color: #ffffff;">
+		<div class="clase2" fxFlex="30" >
+			<img fxFlex="100" src="assets/logodiper.png" alt="Diper" style="height: 75%; width: 75%">
     </div>
-    <div class="clase3" style="top:20px" >
+    <div fxFlex=40></div>
+    <div class="clase3" style="top:20px" fxFlex="30" fxLayoutAlign="end center">
       
-      <mat-grid-list cols="1" rowHeight="90px" >
-        <mat-grid-tile>
-          <form >
-            
-            <mat-form-field appearance="outline" style="width:110px !important;padding-right: 15px;
+      
+            <mat-form-field fxFlex="50" appearance="outline" style="padding-right: 15px;
             padding-left: 15px;">
               <mat-label>Fecha</mat-label>
               <input matInput placeholder="Fecha" value="{{jsfecha}}" readonly="true">
             </mat-form-field>          
-            </form>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <form >
-            <mat-form-field appearance="outline" style="width:110px !important">
+           
+            <mat-form-field fxFlex="50" appearance="outline" style="padding-right: 15px; padding-left: 15px;">
               <mat-label>Pedido</mat-label>
               <input matInput placeholder="Fecha" value="{{jsfecha}}" readonly="true">
             </mat-form-field>
-            </form>
-        </mat-grid-tile>
-      </mat-grid-list>
+            
       
 
     </div>
@@ -43,21 +36,22 @@
 </header>
 
 <body style="background-color: #e6ffcc; height: 100%;">
-  <br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br>
   <div class="clase5" style="background-color: white; top:20px; " >
-    <label style="top: 20px; width:auto; font-size:26px; font-weight: bold; padding-right: 50%">Datos de Cliente</label>
+    <div fxLayout="row" fxLayoutAlign="start center">
+    <label fxFlex="60" style="top: 20px; width:auto; font-size:26px; font-weight: bold;">Datos de Cliente</label>
     
-        <mat-form-field appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
+        <mat-form-field fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
           <mat-label>No. Cliente</mat-label>
           <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
         </mat-form-field>
-        <button color=accent mat-flat-button (click)="visibilidad = !visibilidad">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
-        
-    <hr>
+        <button fxFlex="10" color=accent mat-flat-button (click)="visibilidad = !visibilidad">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
+      </div>
     
-    <br><br>
+    
     <form name="datos_Cliente" *ngIf="visibilidad">
-    <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
+      <hr>
+      <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Cliente</mat-label>
       <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
     </mat-form-field>
@@ -112,7 +106,7 @@
 
   <br><br>
   <div class="clase5" style="background-color: white; top:20px" >
-    
+    <div fxLayout="row" fxLayoutAlign="start center">
       <label style="top: 20px; width:40%; font-size:26px; font-weight: bold">Pedido</label>
     
       <mat-form-field appearance="standard" style="top:10px;margin-left: auto; width:17% !important; padding-right: 4%;visibility: hidden">
@@ -120,17 +114,39 @@
         <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
       </mat-form-field>
       
-      <button color=accent style="margin-left: 10px" mat-flat-button (click)="muebles[muebles.length] = muebles.length">Agregar Item</button>
-      <button color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length)" *ngIf="muebles.length>0">Eliminar Item</button>    
-    <hr>
+      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles[muebles.length] = muebles.length">Agregar Item</button>
+      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length)" *ngIf="muebles.length>0">Eliminar Item</button>    
+      </div>
+      <hr>
     
-    <br><br>
     <div *ngFor="let index of muebles">
-      <label>
-        Alias:
-        <input type="text" [formControlName]="i">
-      </label>  
-        Hola {{index+1}}
+      <div fxLayout="row" fxLayoutAlign="space-evenly center" >
+      
+        <mat-form-field fxFlex="20" appearance="standard" style="padding-right: 6%">
+          <mat-label>Cliente</mat-label>
+          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+        </mat-form-field>
+        <mat-form-field fxFlex="50" appearance="standard" style="padding-right: 6%">
+          <mat-label>RFC</mat-label>
+          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+        </mat-form-field>
+        <mat-form-field fxFlex="20" appearance="standard" style="padding-right: 6%">
+          <mat-label>Domicilio</mat-label>
+          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+        </mat-form-field>
+      
+      
+        <label fxFlex>
+          Alias:
+          <input type="text" [formControlName]="i">
+        </label>  
+          Hola {{index+1}}
+  
+
+
+      </div>
+      
+      
     </div>
     </div>
   
