@@ -41,8 +41,9 @@
   .clase5{
     padding-left: 20px;
     padding-right: 20px;
-    margin-left: 6%;
-    margin-right: 6%;
+    margin-left: 13%;
+    margin-right: 13%;
     align-content: center;
-    width: 85%;
+    align-self: center;
+    width: 74%;
   }
