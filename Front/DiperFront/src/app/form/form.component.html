@@ -43,69 +43,60 @@
     
         <mat-form-field fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
           <mat-label>No. Cliente</mat-label>
-          <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+          <input matInput #NoCliente placeholder="Numero de Cliente" value="" readonly="false">            
         </mat-form-field>
-        <button fxFlex="10" color=accent mat-flat-button (click)="visibilidad = !visibilidad">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
+        <button #buscar fxFlex="10" color=accent *ngIf="!visibilidad" mat-flat-button (click)="visibilidad = !visibilidad; getClientes(NoCliente.value)">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
+        <button #ocultar fxFlex="10" color=accent *ngIf="visibilidad" mat-flat-button (click)="visibilidad = !visibilidad; Cliente=null">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
       </div>
       <hr>
     <br>
-    <form name="datos_Cliente" *ngIf="visibilidad">
+    <form name="datos_Cliente" *ngIf="visibilidad && existe">
     
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Cliente</mat-label>
-      <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+      <input #cliente matInput placeholder="Fecha" value="{{clientes[0].Cln_Nombre}} {{clientes[0].Cln_Apellido}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
       <mat-label>RFC</mat-label>
-      <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+      <input #rfc matInput placeholder="Fecha" value="{{clientes[0].Cln_RFC}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Domicilio</mat-label>
-      <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+      <input #domicilio matInput placeholder="Fecha" value="{{clientes[0].Cln_Direccion}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
         <mat-label>Colonia</mat-label>
-        <mat-select>
-            <mat-option>None</mat-option>
-            <mat-option value="option1">Option 1</mat-option>
-            <mat-option value="option2">Option 2</mat-option>
-            <mat-option value="option3">Option 3</mat-option>
-          </mat-select>
+        <input #colonia matInput placeholder="Fecha" value="El potrillo" readonly="true">
       </mat-form-field>
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
           <mat-label>Ciudad</mat-label>
-          <mat-select>
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
+          <input #ciudad matInput placeholder="Fecha" value="{{clientes[0].Cln_Ciudad}}" readonly="true">
         </mat-form-field>
         <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
             <mat-label>Estado</mat-label>
-            <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+            <input #estado matInput placeholder="Fecha" value="{{clientes[0].Cln_Estado}}" readonly="true">            
           </mat-form-field>
           <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
               <mat-label>Telefono</mat-label>
-              <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+              <input #telefono matInput placeholder="Fecha" value="{{clientes[0].Cln_TelCom}}" readonly="true">            
             </mat-form-field>
             <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
                 <mat-label>Persona</mat-label>
-                <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+                <input #persona matInput placeholder="Fecha" value="{{clientes[0].Cln_Compania}}" readonly="true">            
               </mat-form-field>
               <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
                   <mat-label>Consignar</mat-label>
-                  <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+                  <input #consignar matInput placeholder="Fecha" value="Nombre" readonly="true">            
                 </mat-form-field>
                 <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
                     <mat-label>E-mail</mat-label>
-                    <input matInput placeholder="Fecha" value="Nombre" readonly="true">            
+                    <input #email matInput placeholder="Fecha" value="{{clientes[0].Cln_Email}}" readonly="true">            
                   </mat-form-field>                  
     </form>
   </div>
 
   <br><br>
-  <div class="clase5" style="background-color: white; top:20px" >
+  <div *ngIf="visibilidad && existe" class="clase5" style="background-color: white; top:20px" >
     <div fxLayout="row" fxLayoutAlign="start center">
       <label style="top: 20px; width:40%; font-size:26px; font-weight: bold">Pedido</label>
     

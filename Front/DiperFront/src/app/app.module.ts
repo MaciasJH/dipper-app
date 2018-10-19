@@ -8,6 +8,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
     FlexLayoutModule,
+    HttpClientModule,
     MatButtonModule, MatCheckboxModule, LayoutModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatGridListModule, MatSelectModule],
   providers: [],
   bootstrap: [AppComponent]
