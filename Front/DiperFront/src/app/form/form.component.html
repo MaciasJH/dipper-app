@@ -7,6 +7,7 @@
 
 	<title>Diper</title>
 </head>
+<div id="todo">
 <header style="background-color: #ffffff;">
 	<div fxLayout="row" fxLayoutAlign="start center" class="clase1" style="background-color: #ffffff;">
 		<div class="clase2" fxFlex="30" >
@@ -35,7 +36,7 @@
   </div>
 </header>
 
-<body style="background-color: #c7e6a7; height: 100%;">
+<body  style="background-color: #c7e6a7; height: 100%;">
   <br><br><br>
   <div class="clase5" style="background-color: white; top:20px; " >
     <div fxLayout="row" fxLayoutAlign="start center">
@@ -112,7 +113,7 @@
     
     <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
       <div fxFlex="1"></div>
-      <div style="padding-right:5%"fxFlex="8">No.</div>
+      <div style="padding-right:5%"fxFlex="15">Pz/Jg</div>
       <div style="padding-right:5%"fxFlex="15">Cant.</div>
       <div style="padding-right:5%"fxFlex="45">Descripcion</div>
       <div style="padding-right:5%"fxFlex="15">Precio Unit.</div>
@@ -124,7 +125,20 @@
     <div *ngFor="let index of muebles">
       <div fxLayout="row" fxLayoutAlign="space-evenly center">
         <div fxFlex="1"></div>
-        <div fxFlex="8"style="text-align:center;padding-right:5%">{{index+1}}</div>
+
+
+        <mat-form-field fxFlex="15" name="Mueble" appearance="fill" style="text-align:center;padding-right:5%">
+          <mat-select #tipo placeholder="Tipo" (selectionChange)="getMuebles(tipo.value)">
+            <mat-option value=Pieza>            
+            Pieza
+            </mat-option>
+            <mat-option value="Juego">            
+            Juego
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+
         <mat-form-field fxFlex="15" appearance="fill"style="padding-right:5% ">          
           <input matInput placeholder="Cantidad" type="number" value="1" readonly="false">            
         </mat-form-field>
@@ -171,7 +185,7 @@
       </div>
       <div fxFlex="15"style="padding-right:5%;">          
       </div>
-      <button color=accent style="text-align: center" mat-flat-button>Enviar</button>
+      <button color=accent style="text-align: center" mat-flat-button (click)="genPDF()">Enviar</button>
       <div fxFlex="1"></div>
     </div>
 <br>
@@ -179,6 +193,7 @@
   
  <br><br><br>
 </body>
+</div>
 <footer>
 </footer>
 </html>
