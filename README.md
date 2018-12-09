@@ -1,2 +1,1 @@
-# dipper-app
-Proyecto PWA para Diper
+# Diper Venta

@@ -16,8 +16,13 @@ export class GetServiceService {
 
  // Uses http.get() to load data from a single API endpoint
  getClientes(cliente) {
-  return this.http.get('http://localhost:1337/api/clientes/'+cliente);
+  return this.http.get('http://diperventa.zapto.org:1337/api/clientes/'+cliente);
+}
+  getPrecioP(mueble,lista) {
+    return this.http.get('http://187.234.58.207:1337/api/piezas/'+mueble+'/'+lista)
+}
+  getPrecioJ(mueble,lista) {
+  return this.http.get('http://187.234.58.207:1337/api/juegos/'+mueble+'/'+lista)
+}
 }
 
-
-}

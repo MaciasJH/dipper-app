@@ -6,6 +6,7 @@ var connect = function()
         password: '',
         server: '192.168.1.91',
         database: 'SISPLANER',
+
     });
  
     return conn;

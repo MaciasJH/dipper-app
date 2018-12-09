@@ -55,35 +55,35 @@
     
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Cliente</mat-label>
-      <input #cliente matInput placeholder="Fecha" value="{{clientes[0].Cln_Nombre}} {{clientes[0].Cln_Apellido}}" readonly="true">            
+      <input #cliente matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Nombre}} {{clientes.cliente[0].Cln_Apellido}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
       <mat-label>RFC</mat-label>
-      <input #rfc matInput placeholder="Fecha" value="{{clientes[0].Cln_RFC}}" readonly="true">            
+      <input #rfc matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_RFC}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
       <mat-label>Domicilio</mat-label>
-      <input #domicilio matInput placeholder="Fecha" value="{{clientes[0].Cln_Direccion}}" readonly="true">            
+      <input #domicilio matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Direccion}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
         <mat-label>Colonia</mat-label>
-        <input #colonia matInput placeholder="Fecha" value="El potrillo" readonly="true">
+        <input #colonia matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Colonia}}" readonly="true">
       </mat-form-field>
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
           <mat-label>Ciudad</mat-label>
-          <input #ciudad matInput placeholder="Fecha" value="{{clientes[0].Cln_Ciudad}}" readonly="true">
+          <input #ciudad matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Ciudad}}" readonly="true">
         </mat-form-field>
         <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
             <mat-label>Estado</mat-label>
-            <input #estado matInput placeholder="Fecha" value="{{clientes[0].Cln_Estado}}" readonly="true">            
+            <input #estado matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Estado}}" readonly="true">            
           </mat-form-field>
           <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
               <mat-label>Telefono</mat-label>
-              <input #telefono matInput placeholder="Fecha" value="{{clientes[0].Cln_TelCom}}" readonly="true">            
+              <input #telefono matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_TelCom}}" readonly="true">            
             </mat-form-field>
             <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
-                <mat-label>Persona</mat-label>
-                <input #persona matInput placeholder="Fecha" value="{{clientes[0].Cln_Compania}}" readonly="true">            
+                <mat-label>Compañia</mat-label>
+                <input #persona matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Compania}}" readonly="true">            
               </mat-form-field>
               <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
                   <mat-label>Consignar</mat-label>
@@ -91,7 +91,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
                     <mat-label>E-mail</mat-label>
-                    <input #email matInput placeholder="Fecha" value="{{clientes[0].Cln_Email}}" readonly="true">            
+                    <input #email matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Email}}" readonly="true">            
                   </mat-form-field>                  
     </form>
   </div>
@@ -106,8 +106,8 @@
         <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
       </mat-form-field>
       
-      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles[muebles.length] = muebles.length">+</button>
-      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length)" *ngIf="muebles.length>0">-</button>    
+      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0)" *ngIf="datosMueble.length==muebles.length">+</button>
+      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length); datosMueble.pop(datosMueble.length); importenew.pop(importenew.lenght)" *ngIf="muebles.length>0">-</button>    
       </div>
       <hr>
     
@@ -115,20 +115,20 @@
       <div fxFlex="1"></div>
       <div style="padding-right:5%"fxFlex="15">Pz/Jg</div>
       <div style="padding-right:5%"fxFlex="15">Cant.</div>
-      <div style="padding-right:5%"fxFlex="45">Descripcion</div>
+      <div style="padding-right:5%"fxFlex="35">Descripcion</div>
       <div style="padding-right:5%"fxFlex="15">Precio Unit.</div>
-      <div fxFlex="15">Importe</div>
+      <div fxFlex="10">Importe</div>
       <div fxFlex="1"></div>
       
     </div>
     <hr>
-    <div *ngFor="let index of muebles">
+    <div *ngFor="let index of muebles;let m = index">
       <div fxLayout="row" fxLayoutAlign="space-evenly center">
         <div fxFlex="1"></div>
 
 
         <mat-form-field fxFlex="15" name="Mueble" appearance="fill" style="text-align:center;padding-right:5%">
-          <mat-select #tipo placeholder="Tipo" (selectionChange)="getMuebles(tipo.value)">
+          <mat-select #tipo placeholder=Tipo >
             <mat-option value=Pieza>            
             Pieza
             </mat-option>
@@ -139,17 +139,37 @@
         </mat-form-field>
         
 
-        <mat-form-field fxFlex="15" appearance="fill"style="padding-right:5% ">          
-          <input matInput placeholder="Cantidad" type="number" value="1" readonly="false">            
+        <mat-form-field fxFlex="15" style="padding-right:5% ">          
+          <input matInput #cant placeholder="Cantidad" type="number" value="0" (valueChanges)="setCantidad(cant.value, m)" readonly="false">            
         </mat-form-field>
-        <mat-form-field fxFlex="45" appearance="fill"style="padding-right:5%;">          
-          <input matInput placeholder="Descripcion" type="text" value="Buro" readonly="true">            
+        <mat-form-field fxFlex="35" appearance="fill"style="padding-right:5%;">          
+          <mat-select type="text" #descripcion (selectionChange)="getPrecio(descripcion.value, clientes.cliente[0].Lpr_Clave, m, tipo.value)">
+          
+          
+            <ng-container *ngIf="tipo.value !=null">
+            <ng-container *ngIf="tipo.value=='Pieza';then pieza; else juego">
+            </ng-container>
+          </ng-container>
+            <ng-template #pieza>
+                <mat-option  *ngFor="let index of piezas; let i = index" value={{piezas[i].Pzs_Descripcion}}>            
+                    {{piezas[i].Pzs_Descripcion}}
+                  </mat-option>
+            </ng-template>
+            
+              <ng-template #juego>
+                <mat-option  *ngFor="let index of juegos; let i = index" value={{juegos[i].Jgs_Descripcion}}>            
+                    {{juegos[i].Jgs_Descripcion}}
+                  </mat-option>
+              </ng-template>
+          </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex="15" appearance="fill"style="padding-right:5%">
-          <input matInput placeholder="Precio" value="100" readonly="true">            
+          <input matInput placeholder="Precio" value="{{importe[m]}}" readonly="true">            
         </mat-form-field>
-        <mat-form-field fxFlex="15" appearance="fill">
-          <input matInput placeholder="Importe" value="100" readonly="true">            
+        <mat-form-field fxFlex="10" appearance="fill">
+          <input matInput #imp  placeholder="Importe" value={{importe[m]*cant.value}} (valueChanges)="calcImporte(imp.value, m)" >            
+          {{calcTodo(m, tipo.value, cant.value, descripcion.value, imp.value)}}
+          
         </mat-form-field>
         <div fxFlex="1"></div>
       </div>
@@ -166,11 +186,11 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
       <div fxFlex="1"></div>
-      <div style="padding-right:5%"fxFlex="8"></div>
       <div style="padding-right:5%"fxFlex="15"></div>
-      <div style="padding-right:5%"fxFlex="45"></div>
-      <div style="padding-right:5%"fxFlex="15">Importe Total:</div>
-      <div fxFlex="15">$$$</div>
+      <div style="padding-right:5%"fxFlex="15"></div>
+      <div style="padding-right:5%"fxFlex="35"></div>
+      <div style="padding-right:5%"fxFlex="10">Importe Total:</div>
+      <div fxFlex="15">{{tot | currency:'MXN'}}</div>
       <div fxFlex="1"></div>
       
     </div>
@@ -178,14 +198,14 @@
 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <div fxFlex="1"></div>
-      <div fxFlex="8"style="text-align:center;padding-right:5%"></div>
+      <div fxFlex="15"style="text-align:center;padding-right:5%"></div>
       <div fxFlex="15" style="padding-right:5% ">          
       </div>  
-      <div fxFlex="40"style="padding-right:5%;">          
+      <div fxFlex="35"style="padding-right:5%;">          
       </div>
-      <div fxFlex="15"style="padding-right:5%;">          
+      <div fxFlex="10"style="padding-right:5%;">          
       </div>
-      <button color=accent style="text-align: center" mat-flat-button (click)="genPDF()">Enviar</button>
+      <button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>
       <div fxFlex="1"></div>
     </div>
 <br>
