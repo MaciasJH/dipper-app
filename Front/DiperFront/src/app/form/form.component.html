@@ -144,14 +144,14 @@
         </mat-form-field>
         <mat-form-field fxFlex="35" appearance="fill"style="padding-right:5%;">                    
           <input type="text" #descripcion disabled=true placeholder="Seleccion" matInput [formControl]="myControl" [matAutocomplete]="auto">
-          <mat-autocomplete  #auto="matAutocomplete"  (optionSelected)="getPrecio(descripcion.value, clientes.cliente[0].Lpr_Clave, m, tipo.value); descripcion.disabled=true" >                                
+          <mat-autocomplete panelWidth="400px" #auto="matAutocomplete"  (optionSelected)="getPrecio(descripcion.value, clientes.cliente[0].Lpr_Clave, m, tipo.value); descripcion.disabled=true" >                                
           
             <ng-container *ngIf="tipo.value !=null">
             <ng-container *ngIf="tipo.value=='Pieza';then pieza; else juego">
             </ng-container>
           </ng-container>
             <ng-template #pieza>
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option" >
                 {{option}}
                   </mat-option>  
               <!--<mat-option  *ngFor="let index of piezas; let i = index" value={{piezas[i].Pzs_Descripcion}}>            
@@ -197,8 +197,8 @@
       <div style="padding-right:5%"fxFlex="15"></div>
       <div style="padding-right:5%"fxFlex="15"></div>
       <div style="padding-right:5%"fxFlex="35"></div>
-      <div style="padding-right:5%"fxFlex="10">Importe Total:</div>
-      <div fxFlex="15">{{tot | currency:'MXN'}}</div>
+      <div style="padding-right:5%"fxFlex="15">Importe Total:</div>
+      <div fxFlex="10">{{tot | currency:'MXN'}}</div>
       <div fxFlex="1"></div>
       
     </div>
@@ -211,9 +211,10 @@
       </div>  
       <div fxFlex="35"style="padding-right:5%;">          
       </div>
-      <div fxFlex="10"style="padding-right:5%;">          
+      <div fxFlex="15"style="padding-right:5%;">          
       </div>
-      <button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>
+      <div fxFlex="10"><button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>
+      </div>
       <div fxFlex="1"></div>
     </div>
 <br>
