@@ -41,7 +41,9 @@ export class FormComponent implements OnInit {
   public precios;
   public emailPdf;
 
-
+  myControl = new FormControl();
+  options: string[] = [];
+  filteredOptions: Observable<string[]>;
   
   formatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
@@ -51,15 +53,35 @@ export class FormComponent implements OnInit {
     // and is usually already 2
   });
   
-constructor(private _getService: GetServiceService) { 
-    this.jsfecha = formatDate(this.fecha, 'dd/MM/yyyy', 'en-US', '-0500');
+constructor(private _getService: GetServiceService) {     
+    this.jsfecha = formatDate(this.fecha, 'dd/MM/yyyy'/*+' hh:mm a'*/, 'en-US', '-0600');    
   }
 
   ngOnInit() {
-
+    this.filteredOptions = this.myControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+   
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
 
+  fillOptions(tipo){
+    if(tipo=="Pieza"){
+      this.options=this.getValues(this.piezas,'Pzs_Descripcion')
+   
+    }
+    else{
+      this.options=this.getValues(this.juegos,'Jgs_Descripcion')
+     
+
+    }
+  }
 
   getClientes(cliente){
     this._getService.getClientes(cliente)
@@ -73,9 +95,9 @@ constructor(private _getService: GetServiceService) {
     this.importenew[t] =impn;
     this.tot=0;
     for (let index = 0; index < this.importenew.length; index++) {
-      console.log(Number(this.importenew[index]))
+     
       if(!isNaN(Number(this.importenew[index])) && Number(this.importenew[index])!=0){
-        console.log("entro con un importe de: "+ Number(this.importenew[index]))
+     
       this.tot=Number(Number(this.tot) + Number(this.importenew[index]))
       }
 }
@@ -86,7 +108,7 @@ constructor(private _getService: GetServiceService) {
     this.calcImporte(importe, indice);    
     importe=this.formatter.format(importe)
     if(indice+1 > this.datosMueble.length && descripcion!=undefined && !isNaN(Number(this.importenew[indice])) && Number(this.importenew[indice])!=0){
-      console.log("el indice es: "+indice +" y su descripcion es: "+descripcion)
+     
       this.datosMueble.push({"id":indice, "tipo":tipo, "cant":cantidad, "desc":descripcion, "imp":importe})
     }
     else if(indice<this.datosMueble.length && descripcion!=undefined){
@@ -109,11 +131,11 @@ constructor(private _getService: GetServiceService) {
       console.log('el cliente si existe')    
       console.log(this.clientes.cliente[0].Cln_Nombre+" "+this.clientes.cliente[0].Cln_Apellido)
       if(this.datosCliente.length==0){
-        console.log("datos cliente array length es de 0")
+       
         this.datosCliente.push({"num":this.clientes.cliente[0].Cln_Clave, "nombre": this.clientes.cliente[0].Cln_Nombre +" "+ this.clientes.cliente[0].Cln_Apellido, rfc: this.clientes.cliente[0].Cln_RFC, "ubicacion":this.clientes.cliente[0].Cln_Ciudad+ ", "+this.clientes.cliente[0].Cln_Estado+ ", "+this.clientes.cliente[0].Cln_Pais
         , "domicilio":this.clientes.cliente[0].Cln_Direccion+" "+ this.clientes.cliente[0].Cln_NoExterior +" Col: "+this.clientes.cliente[0].Cln_Col+" CP: "+this.clientes.cliente[0].Cln_CP, telef: this.clientes.cliente[0].Cln_TelCom, comp: this.clientes.cliente[0].Cln_Compania})
       }else{
-        console.log("datos cliente array length es diferente de 0")
+      
         this.datosCliente.pop();
       this.datosCliente.push({"num":this.clientes.cliente[0].Cln_Clave, "nombre": this.clientes.cliente[0].Cln_Nombre +" "+ this.clientes.cliente[0].Cln_Apellido, rfc: this.clientes.cliente[0].Cln_RFC, "ubicacion":this.clientes.cliente[0].Cln_Ciudad+ ", "+this.clientes.cliente[0].Cln_Estado+ ", "+this.clientes.cliente[0].Cln_Pais
       , "domicilio":this.clientes.cliente[0].Cln_Direccion+" "+ this.clientes.cliente[0].Cln_NoExterior +" Col: "+this.clientes.cliente[0].Cln_Col+" CP: "+this.clientes.cliente[0].Cln_CP, telef: this.clientes.cliente[0].Cln_TelCom, comp: this.clientes.cliente[0].Cln_Compania})
@@ -125,7 +147,7 @@ constructor(private _getService: GetServiceService) {
   }
 
   getMuebles(idee){
-    console.log('entro aqui '+idee)
+    
   }
 //falta revisar si es pieza o juego
   getPrecio(idmueble, lista, ttt, tipo){
@@ -142,7 +164,19 @@ constructor(private _getService: GetServiceService) {
  
 
   }
-
+//return an array of values that match on a certain key
+getValues(obj, key) {
+  var objects = [];
+  for (var i in obj) {
+      if (!obj.hasOwnProperty(i)) continue;
+      if (typeof obj[i] == 'object') {
+          objects = objects.concat(this.getValues(obj[i], key));
+      } else if (i == key) {
+          objects.push(obj[i]);
+      }
+  }
+  return objects;
+}
 //return an array of objects according to key, value, or key and value matching
 getObjects(obj, key, val) {
   var objects = [];
@@ -224,7 +258,7 @@ getObjects(obj, key, val) {
       pdf.text(this.formatter.format(this.desctot+(this.desctot*this.iva)/100), 540, pdf.autoTable.previous.finalY + 86, 'right')
       pdf.text('Total con IVA: ',340 ,pdf.autoTable.previous.finalY + 84);
       pdf.text('Observaciones: '+ this.clientes.cliente[0].Cln_Observaciones, 30, pdf.autoTable.previous.finalY + 126)
-      pdf.save('MYPdf.pdf'); // Generated PDF         
+      pdf.save('Venta.pdf'); // Generated PDF         
       
       
 

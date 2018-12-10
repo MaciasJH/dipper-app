@@ -106,7 +106,7 @@
         <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
       </mat-form-field>
       
-      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0)" *ngIf="datosMueble.length==muebles.length">+</button>
+      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0);myControl.value='';options=[]" *ngIf="datosMueble.length==muebles.length">+</button>
       <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length); datosMueble.pop(datosMueble.length); importenew.pop(importenew.lenght)" *ngIf="muebles.length>0">-</button>    
       </div>
       <hr>
@@ -128,7 +128,7 @@
 
 
         <mat-form-field fxFlex="15" name="Mueble" appearance="fill" style="text-align:center;padding-right:5%">
-          <mat-select #tipo placeholder=Tipo >
+          <mat-select #tipo placeholder=Tipo (selectionChange)="fillOptions(tipo.value); descripcion.disabled=false; descripcion.value=''">
             <mat-option value=Pieza>            
             Pieza
             </mat-option>
@@ -142,26 +142,34 @@
         <mat-form-field fxFlex="15" style="padding-right:5% ">          
           <input matInput #cant placeholder="Cantidad" type="number" value="0" (valueChanges)="setCantidad(cant.value, m)" readonly="false">            
         </mat-form-field>
-        <mat-form-field fxFlex="35" appearance="fill"style="padding-right:5%;">          
-          <mat-select type="text" #descripcion (selectionChange)="getPrecio(descripcion.value, clientes.cliente[0].Lpr_Clave, m, tipo.value)">
-          
+        <mat-form-field fxFlex="35" appearance="fill"style="padding-right:5%;">                    
+          <input type="text" #descripcion disabled=true placeholder="Seleccion" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete  #auto="matAutocomplete"  (optionSelected)="getPrecio(descripcion.value, clientes.cliente[0].Lpr_Clave, m, tipo.value); descripcion.disabled=true" >                                
           
             <ng-container *ngIf="tipo.value !=null">
             <ng-container *ngIf="tipo.value=='Pieza';then pieza; else juego">
             </ng-container>
           </ng-container>
             <ng-template #pieza>
-                <mat-option  *ngFor="let index of piezas; let i = index" value={{piezas[i].Pzs_Descripcion}}>            
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+                  </mat-option>  
+              <!--<mat-option  *ngFor="let index of piezas; let i = index" value={{piezas[i].Pzs_Descripcion}}>            
                     {{piezas[i].Pzs_Descripcion}}
-                  </mat-option>
+                  </mat-option>-->
             </ng-template>
             
               <ng-template #juego>
-                <mat-option  *ngFor="let index of juegos; let i = index" value={{juegos[i].Jgs_Descripcion}}>            
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                    </mat-option>
+                <!--<mat-option  *ngFor="let index of juegos; let i = index" value={{juegos[i].Jgs_Descripcion}}>            
                     {{juegos[i].Jgs_Descripcion}}
-                  </mat-option>
+                  </mat-option>-->
               </ng-template>
-          </mat-select>
+          
+            </mat-autocomplete>
+
         </mat-form-field>
         <mat-form-field fxFlex="15" appearance="fill"style="padding-right:5%">
           <input matInput placeholder="Precio" value="{{importe[m]}}" readonly="true">            
