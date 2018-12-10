@@ -38,19 +38,47 @@
 
 <body  style="background-color: #c7e6a7; height: 100%;">
   <br><br><br>
-  <div class="clase5" style="background-color: white; top:20px; " >
+
+
+  <div class="clase5" style="background-color: white; top:20px; ">
     <div fxLayout="row" fxLayoutAlign="start center">
-    <label fxFlex="60" style="top: 20px; width:auto; font-size:26px; font-weight: bold;">Datos de Cliente</label>
+    <label fxFlex="60" style="top: 20px; width:auto; font-size:26px; font-weight: bold;">Ingrese su numero de Agente</label>
     
         <mat-form-field fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
-          <mat-label>No. Cliente</mat-label>
-          <input matInput #NoCliente placeholder="Numero de Cliente" value="" readonly="false">            
+          <mat-label>No. Agente</mat-label>
+          <input matInput #NoAgente placeholder="Numero de Agente" value="" readonly="false">            
         </mat-form-field>
-        <button #buscar fxFlex="10" color=accent *ngIf="!visibilidad" mat-flat-button (click)="visibilidad = !visibilidad; getClientes(NoCliente.value)">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
-        <button #ocultar fxFlex="10" color=accent *ngIf="visibilidad" mat-flat-button (click)="visibilidad = !visibilidad; Cliente=null">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
+        <button #buscar fxFlex="10" color=accent *ngIf="!visibilidad2" mat-flat-button (click)="visibilidad2 = !visibilidad2; optionsC=[]; getAgente(NoAgente.value)">{{visibilidad2 ? 'Ocultar' : 'Buscar'}}</button>
+        <button #ocultar fxFlex="10" color=accent *ngIf="visibilidad2" mat-flat-button (click)="visibilidad2 = !visibilidad2; agente=null;">{{visibilidad2 ? 'Ocultar' : 'Buscar'}}</button>
       </div>
       <hr>
     <br>
+    <form name="list_Clientes" *ngIf="visibilidad2 && existe2">
+    
+      <mat-form-field appearance="standard" style="width:57% !important; padding-right: 6%">
+      <mat-label>Clientes</mat-label>                  
+        <input type="text" #clienteLista disabled=true placeholder="Seleccion" matInput [formControl]="myControl2" [matAutocomplete]="auto2">
+        <mat-autocomplete panelWidth="400px" #auto2="matAutocomplete"  (optionSelected)="NoCliente.value=fillCliente(clienteLista.value)" >                                
+            <mat-option *ngFor="let option of filteredClients | async" [value]="option" >
+              {{option}}
+                </mat-option>  
+
+        
+          </mat-autocomplete>
+
+      </mat-form-field>
+      <mat-form-field fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
+          <mat-label>No. Cliente</mat-label>
+          <input matInput #NoCliente placeholder="Numero de Cliente" value="" readonly="true">            
+        </mat-form-field>
+        <button #buscar style="height:40px; top:20px" fxFlex="10" color=accent *ngIf="!visibilidad && NoCliente.value!=''" mat-flat-button (click)="visibilidad = !visibilidad; getClientes(NoCliente.value)">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>
+        <button #ocultar style="height:40px; top:20px" fxFlex="10" color=accent *ngIf="visibilidad && NoCliente.value!=''" mat-flat-button (click)="visibilidad = !visibilidad; Cliente=null;">{{visibilidad ? 'Ocultar' : 'Buscar'}}</button>          
+    </form>
+    
+  </div>
+  
+  <div class="clase5" style="background-color: white; "  *ngIf="existe">
+     
     <form name="datos_Cliente" *ngIf="visibilidad && existe">
     
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">

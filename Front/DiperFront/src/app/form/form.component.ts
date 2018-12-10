@@ -6,9 +6,8 @@ import { isUndefined, isNumber } from 'util';
 import { isEmpty, startWith, map } from 'rxjs/operators';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import html2canvas from 'html2canvas';
+import {MatSnackBar} from '@angular/material';
 import { Observable } from 'rxjs';
-import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 //let listaMuebles: { id: string, desc:string, cant:number, imp:number }[] = [];
 
@@ -25,7 +24,9 @@ export class FormComponent implements OnInit {
   jsfecha = '';
   selected = 'option2';
   visibilidad = false;
+  visibilidad2 = false;
   existe = false;
+  existe2= false;
   muebles = [10];
   
   importe: number[]=[];
@@ -35,6 +36,8 @@ export class FormComponent implements OnInit {
   tot: number = 0;
   desctot: number=0;
   iva: number=16;
+  public agente;
+  public agentecli;
   public clientes;
   public piezas;
   public juegos;
@@ -42,9 +45,11 @@ export class FormComponent implements OnInit {
   public emailPdf;
 
   myControl = new FormControl();
+  myControl2 = new FormControl();
   options: string[] = [];
+  optionsC: string[]=[];
   filteredOptions: Observable<string[]>;
-  
+  filteredClients: Observable<string[]>;
   formatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: 'MXN',
@@ -53,15 +58,24 @@ export class FormComponent implements OnInit {
     // and is usually already 2
   });
   
-constructor(private _getService: GetServiceService) {     
+constructor(private _getService: GetServiceService, public snackBar: MatSnackBar) {     
     this.jsfecha = formatDate(this.fecha, 'dd/MM/yyyy'/*+' hh:mm a'*/, 'en-US', '-0600');    
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 200,
+    });
+  }
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges
+    this.filteredOptions = this.myControl.valueChanges    
     .pipe(
       startWith(''),
       map(value => this._filter(value))
+    );
+    this.filteredClients=this.myControl2.valueChanges
+    .pipe(      
+      startWith(''),
+      map(value => this._filterC(value))
     );
   }
 
@@ -69,6 +83,11 @@ constructor(private _getService: GetServiceService) {
     const filterValue = value.toLowerCase();
    
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  private _filterC(value: string): string[] {
+    const filterValueC = value.toLowerCase();
+   
+    return this.optionsC.filter(optionC => optionC.toLowerCase().includes(filterValueC));
   }
 
   fillOptions(tipo){
@@ -82,6 +101,28 @@ constructor(private _getService: GetServiceService) {
 
     }
   }
+
+
+  sendMail(mailObj) {
+    this._getService.sendMail(mailObj)
+    .subscribe(logro => {console.log("exito ",+logro)},
+      err => console.log("error : "+ console.error(err)),
+      );
+}
+  getAgente(agente){
+    this._getService.getAgente(agente)
+      .subscribe(data => {this.agente = data },
+        err => console.error(err),
+        () => this.mostrarAgente()
+        );
+
+}
+
+  fillCliente(id){
+    console.log(id)
+    return(this.getObjects(this.agentecli,'Nombre',id)[0].Clave)
+  }
+
 
   getClientes(cliente){
     this._getService.getClientes(cliente)
@@ -119,16 +160,41 @@ constructor(private _getService: GetServiceService) {
       this.datosMueble[indice].imp=importe;
     }
   }
-
+  mostrarAgente(){
+    if(this.agente.agente.recordset.length ==0){
+      console.log('el agente no existe')      
+      this.visibilidad2 = false;
+      this.existe2 = false;
+      let snackBarRef = this.snackBar.open('Error: El agente no existe', 'Cerrar',{duration:2000});
+    }else{
+      this.visibilidad2= true;
+      this.existe2=true;
+      console.log('el agente si existe')  
+      let snackBarRef = this.snackBar.open('Bienvenido agente: '+this.agente.agente.recordset[0].Gnt_Nombre+" "+this.agente.agente.recordset[0].Gnt_Apellido, 'Cerrar',{duration:2000}); 
+      
+      
+      this.agentecli=this.agente.clientes;
+      var newArray = []
+      this.agente.clientes.forEach(function (client){
+        newArray.push([{"Nombre": client.Cln_Nombre + " "+ client.Cln_Apellido,"Clave": client.Cln_Clave}])
+      })        
+      this.agentecli=newArray    
+      this.optionsC=this.getValues(this.agentecli, "Nombre")
+      this.optionsC=this.optionsC.filter(nombre => nombre!=" ")
+      console.log(this.optionsC[0]);
+    }
+  }
 
   mostrarCliente(){
     if(this.clientes.length ==0){
-      console.log('el cliente no existe')      
+      console.log('el cliente no existe')   
+      let snackBarRef = this.snackBar.open('Error: El cliente no existe', 'Cerrar',{duration:2000});
       this.visibilidad = false;
       this.existe = false;
     }else{
       this.existe=true;
-      console.log('el cliente si existe')    
+      console.log('el cliente si existe')  
+      let snackBarRef = this.snackBar.open('Cliente si existe', 'Cerrar',{duration:2000});  
       console.log(this.clientes.cliente[0].Cln_Nombre+" "+this.clientes.cliente[0].Cln_Apellido)
       if(this.datosCliente.length==0){
        
@@ -230,7 +296,7 @@ getObjects(obj, key, val) {
       +'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'
       pdf.addImage(imgData, 'JPEG', 30, 10, 698/4, 219/4);
       pdf.setFontSize(12)
-      pdf.text('Fecha: ' + this.jsfecha, 410, 40)
+      pdf.text('Fecha: ' + this.jsfecha, 410, 40)      
      // pdf.addImage(img, 'PNG', 15, 40, 180, 160);
       pdf.setFontSize(18);
       pdf.text('Datos del Cliente', 30, 96);
@@ -241,6 +307,7 @@ getObjects(obj, key, val) {
       pdf.text('Pedido', 30, pdf.autoTable.previous.finalY + 40);
       pdf.setFontSize(11);
       pdf.autoTable(columnsMuebles, rowsMuebles, {startY: pdf.autoTable.previous.finalY + 48})
+      pdf.text('Agente de Ventas: ' + this.agente.agente.recordset[0].Gnt_Nombre+" "+this.agente.agente.recordset[0].Gnt_Apellido, 30 ,pdf.autoTable.previous.finalY + 30)
       pdf.text('Importe Total: ',340 ,pdf.autoTable.previous.finalY + 30);
       pdf.text(this.formatter.format(this.tot), 540, pdf.autoTable.previous.finalY + 30, 'right')
       this.desctot=this.tot;
@@ -258,8 +325,10 @@ getObjects(obj, key, val) {
       pdf.text(this.formatter.format(this.desctot+(this.desctot*this.iva)/100), 540, pdf.autoTable.previous.finalY + 86, 'right')
       pdf.text('Total con IVA: ',340 ,pdf.autoTable.previous.finalY + 84);
       pdf.text('Observaciones: '+ this.clientes.cliente[0].Cln_Observaciones, 30, pdf.autoTable.previous.finalY + 126)
-      pdf.save('Venta.pdf'); // Generated PDF         
-      
+      //pdf.save('Venta.pdf'); // Generated PDF         
+      var pdfuri=pdf.output('datauristring')
+      this.sendMail(pdfuri)
+      let snackBarRef = this.snackBar.open('Exito: Venta registrada', 'Cerrar',{duration:2000});
       
 
   //console.log(dataurl);
