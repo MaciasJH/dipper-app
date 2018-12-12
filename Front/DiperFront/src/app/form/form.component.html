@@ -46,7 +46,7 @@
     
         <mat-form-field fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
           <mat-label>No. Agente</mat-label>
-          <input matInput #NoAgente placeholder="Numero de Agente" value="" readonly="false">            
+          <input matInput #NoAgente placeholder="Formato: ###" value="" readonly="false">            
         </mat-form-field>
         <button #buscar fxFlex="10" color=accent *ngIf="!visibilidad2" mat-flat-button (click)="visibilidad2 = !visibilidad2; optionsC=[]; getAgente(NoAgente.value)">{{visibilidad2 ? 'Ocultar' : 'Buscar'}}</button>
         <button #ocultar fxFlex="10" color=accent *ngIf="visibilidad2" mat-flat-button (click)="visibilidad2 = !visibilidad2; agente=null;">{{visibilidad2 ? 'Ocultar' : 'Buscar'}}</button>
@@ -55,10 +55,10 @@
     <br>
     <form name="list_Clientes" *ngIf="visibilidad2 && existe2">
     
-      <mat-form-field appearance="standard" style="width:57% !important; padding-right: 6%">
+      <mat-form-field appearance="standard" fxFlex="60" style="padding-right: 6%">
       <mat-label>Clientes</mat-label>                  
         <input type="text" #clienteLista disabled=true placeholder="Seleccion" matInput [formControl]="myControl2" [matAutocomplete]="auto2">
-        <mat-autocomplete panelWidth="400px" #auto2="matAutocomplete"  (optionSelected)="NoCliente.value=fillCliente(clienteLista.value)" >                                
+        <mat-autocomplete panelWidth="400px" #auto2="matAutocomplete"  (optionSelected)="banderaCliente=true;NoCliente.value=fillCliente(clienteLista.value)" >                                
             <mat-option *ngFor="let option of filteredClients | async" [value]="option" >
               {{option}}
                 </mat-option>  
@@ -67,7 +67,7 @@
           </mat-autocomplete>
 
       </mat-form-field>
-      <mat-form-field fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
+      <mat-form-field #formIdCliente fxFlex="20" appearance="standard" style="top:10px;margin-left: auto; width:auto !important; padding-right: 4%;">
           <mat-label>No. Cliente</mat-label>
           <input matInput #NoCliente placeholder="Numero de Cliente" value="" readonly="true">            
         </mat-form-field>
@@ -80,9 +80,10 @@
   <div class="clase5" style="background-color: white; "  *ngIf="existe">
      
     <form name="datos_Cliente" *ngIf="visibilidad && existe">
-    
+      <br>
+      <h3>Datos del cliente</h3>
       <mat-form-field appearance="standard" style="width:47% !important; padding-right: 6%">
-      <mat-label>Cliente</mat-label>
+      <mat-label>Nombre</mat-label>
       <input #cliente matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Nombre}} {{clientes.cliente[0].Cln_Apellido}}" readonly="true">            
     </mat-form-field>
     <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
@@ -120,7 +121,24 @@
                 <mat-form-field appearance="standard" style="width:47% !important; padding-right: 0%">
                     <mat-label>E-mail</mat-label>
                     <input #email matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_Email}}" readonly="true">            
-                  </mat-form-field>                  
+                  </mat-form-field>  
+          <h3>Descuentos aplicables</h3>          
+          <mat-form-field appearance="standard" style="width:22% !important; padding-right: 3%">
+            <mat-label>Descuento pactado</mat-label>
+            <input #desc1 matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_DescuentoPactado}}" readonly="true">            
+          </mat-form-field>
+          <mat-form-field appearance="standard" style="width:22% !important; padding-right: 3%">
+            <mat-label>Descuento pronto pago</mat-label>
+            <input #desc2 matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_DescuentoProntoPago}}" readonly="true">            
+          </mat-form-field>
+          <mat-form-field appearance="standard" style="width:22% !important; padding-right: 3%">
+            <mat-label>Descuento recoger origen</mat-label>
+            <input #desc3 matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_DescuentoRecogerOrigen}}" readonly="true">            
+          </mat-form-field>
+          <mat-form-field appearance="standard" style="width:22% !important; padding-right: 3%">
+            <mat-label>Descuento opcional</mat-label>
+            <input #desc4 matInput placeholder="Fecha" value="{{clientes.cliente[0].Cln_DescuentoOpcional}}" readonly="true">            
+          </mat-form-field>
     </form>
   </div>
 
@@ -134,8 +152,8 @@
         <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
       </mat-form-field>
       
-      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0);myControl.value='';options=[]" *ngIf="datosMueble.length==muebles.length">+</button>
-      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length); datosMueble.pop(datosMueble.length); importenew.pop(importenew.lenght)" *ngIf="muebles.length>0">-</button>    
+      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0);myControl.value='';options=[]; banderaPdf=false; importe.push(0)" *ngIf="datosMueble.length==muebles.length">+</button>
+      <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length); datosMueble.pop(datosMueble.length); importenew.pop(importenew.length); importe.pop(importe.length);banderaPdf=false" *ngIf="muebles.length>0">-</button>    
       </div>
       <hr>
     
@@ -203,7 +221,7 @@
           <input matInput placeholder="Precio" value="{{importe[m]}}" readonly="true">            
         </mat-form-field>
         <mat-form-field fxFlex="10" appearance="fill">
-          <input matInput #imp  placeholder="Importe" value={{importe[m]*cant.value}} (valueChanges)="calcImporte(imp.value, m)" >            
+          <input matInput #imp  placeholder="Importe" value={{importe[m]*cant.value}} (valueChanges)="calcImporte(imp.value, m);" >            
           {{calcTodo(m, tipo.value, cant.value, descripcion.value, imp.value)}}
           
         </mat-form-field>
@@ -220,16 +238,58 @@
       
       
     </div>
-    <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center;" >
       <div fxFlex="1"></div>
       <div style="padding-right:5%"fxFlex="15"></div>
       <div style="padding-right:5%"fxFlex="15"></div>
-      <div style="padding-right:5%"fxFlex="35"></div>
-      <div style="padding-right:5%"fxFlex="15">Importe Total:</div>
+      <div style="padding-right:5%"fxFlex="25"></div>
+      <div style="padding-right:5%"fxFlex="25">Importe Total:</div>
       <div fxFlex="10">{{tot | currency:'MXN'}}</div>
       <div fxFlex="1"></div>
       
     </div>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; " *ngIf="desctot>0" >
+        <div fxFlex="1"></div>
+        <div style="padding-right:5%"fxFlex="15"></div>
+        <div style="padding-right:5%"fxFlex="15"></div>
+        <div style="padding-right:5%"fxFlex="25"></div>
+        <div style="padding-right:5%"fxFlex="25">Descuento:</div>
+        <div fxFlex="10">{{tot-desctot | currency:'MXN'}}</div>
+        <div fxFlex="1"></div>
+        
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; " *ngIf="desctot>0">
+          <div fxFlex="1"></div>
+          <div style="padding-right:5%"fxFlex="15"></div>
+          <div style="padding-right:5%"fxFlex="15"></div>
+          <div style="padding-right:5%"fxFlex="25"></div>
+          <div style="padding-right:5%"fxFlex="25">Total con Descuento:</div>
+          <div fxFlex="10">{{desctot | currency:'MXN'}}</div>
+          <div fxFlex="1"></div>
+          
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; " >
+            <div fxFlex="1"></div>
+            <div style="padding-right:5%"fxFlex="15"></div>
+            <div style="padding-right:5%"fxFlex="15"></div>
+            <div style="padding-right:5%"fxFlex="25"></div>
+            <div style="padding-right:5%"fxFlex="25">IVA</div>
+            <div fxFlex="10" *ngIf="desctot>0">{{desctot*iva/100 | currency:'MXN'}}</div>
+            <div fxFlex="10" *ngIf="desctot==0">{{tot*iva/100 | currency:'MXN'}}</div>
+            <div fxFlex="1"></div>
+            
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
+              <div fxFlex="1"></div>
+              <div style="padding-right:5%"fxFlex="15"></div>
+              <div style="padding-right:5%"fxFlex="15"></div>
+              <div style="padding-right:5%"fxFlex="25"></div>
+              <div style="padding-right:5%"fxFlex="25">Total con IVA:</div>
+              <div fxFlex="10" *ngIf="desctot>0">{{desctot+desctot*iva/100 | currency:'MXN'}}</div>
+              <div fxFlex="10" *ngIf="desctot==0">{{tot+tot*iva/100 | currency:'MXN'}}</div>
+              <div fxFlex="1"></div>
+              
+            </div>
     <hr>
 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
@@ -237,11 +297,11 @@
       <div fxFlex="15"style="text-align:center;padding-right:5%"></div>
       <div fxFlex="15" style="padding-right:5% ">          
       </div>  
-      <div fxFlex="35"style="padding-right:5%;">          
+      <div fxFlex="40"style="padding-right:5%;">          
       </div>
-      <div fxFlex="15"style="padding-right:5%;">          
+      <div fxFlex="10"><button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>          
       </div>
-      <div fxFlex="10"><button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>
+      <div fxFlex="10"><button color=accent style="text-align: center" mat-flat-button (click)="sendPDF()" *ngIf="banderaPdf">Enviar PDF</button>
       </div>
       <div fxFlex="1"></div>
     </div>

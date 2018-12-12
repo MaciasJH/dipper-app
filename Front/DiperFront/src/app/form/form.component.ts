@@ -27,6 +27,7 @@ export class FormComponent implements OnInit {
   visibilidad2 = false;
   existe = false;
   existe2= false;
+  banderaPdf=false;
   muebles = [10];
   
   importe: number[]=[];
@@ -43,6 +44,7 @@ export class FormComponent implements OnInit {
   public juegos;
   public precios;
   public emailPdf;
+  public pdfuri;
 
   myControl = new FormControl();
   myControl2 = new FormControl();
@@ -104,15 +106,17 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
 
 
   sendMail(mailObj) {
+    this.snackBar.open('Cargando. . .', "",{duration:20000})
     this._getService.sendMail(mailObj)
-    .subscribe(logro => {console.log("exito ",+logro)},
-      err => console.log("error : "+ console.error(err)),
+    .subscribe(logro => { this.snackBar.open('PDF enviado con exito.', "")},
+      err => this.snackBar.open('Error: Problema de conexion con el Servidor', 'Cerrar'),
       );
 }
   getAgente(agente){
+    this.snackBar.open('Cargando. . .', "",{duration:20000})
     this._getService.getAgente(agente)
       .subscribe(data => {this.agente = data },
-        err => console.error(err),
+        err => this.snackBar.open('Error: Problema de conexion con el Servidor', 'Cerrar'),
         () => this.mostrarAgente()
         );
 
@@ -125,9 +129,10 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
 
 
   getClientes(cliente){
+    this.snackBar.open('Cargando. . .', 'Cerrar',{duration:20000})
     this._getService.getClientes(cliente)
       .subscribe(data => {this.clientes = data },
-        err => console.error(err),
+        err => this.snackBar.open('Error: Problema de conexion con el Servidor', 'Cerrar'),
         () => this.mostrarCliente()
         );
 
@@ -141,12 +146,25 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
      
       this.tot=Number(Number(this.tot) + Number(this.importenew[index]))
       }
+      //Calcula los descuentos
+      if(this.clientes.cliente[0].Cln_DescuentoPactado>0 ||
+        this.clientes.cliente[0].Cln_DescuentoProntoPago>0 ||
+        this.clientes.cliente[0].Cln_DescuentoRecogerOrigen>0 ||
+        this.clientes.cliente[0].Cln_DescuentoOpcional>0){
+      this.desctot=this.tot-(this.tot*this.clientes.cliente[0].Cln_DescuentoPactado)/100
+      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoProntoPago)/100
+      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoRecogerOrigen)/100
+      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoOpcional)/100
+    }else{
+      this.desctot=0;
+    }
 }
   }
 
 
   calcTodo(indice, tipo, cantidad, descripcion, importe){
     this.calcImporte(importe, indice);    
+    
     importe=this.formatter.format(importe)
     if(indice+1 > this.datosMueble.length && descripcion!=undefined && !isNaN(Number(this.importenew[indice])) && Number(this.importenew[indice])!=0){
      
@@ -161,6 +179,7 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
     }
   }
   mostrarAgente(){
+    this.snackBar.dismiss()
     if(this.agente.agente.recordset.length ==0){
       console.log('el agente no existe')      
       this.visibilidad2 = false;
@@ -186,6 +205,7 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
   }
 
   mostrarCliente(){
+    this.snackBar.dismiss()
     if(this.clientes.length ==0){
       console.log('el cliente no existe')   
       let snackBarRef = this.snackBar.open('Error: El cliente no existe', 'Cerrar',{duration:2000});
@@ -310,12 +330,7 @@ getObjects(obj, key, val) {
       pdf.text('Agente de Ventas: ' + this.agente.agente.recordset[0].Gnt_Nombre+" "+this.agente.agente.recordset[0].Gnt_Apellido, 30 ,pdf.autoTable.previous.finalY + 30)
       pdf.text('Importe Total: ',340 ,pdf.autoTable.previous.finalY + 30);
       pdf.text(this.formatter.format(this.tot), 540, pdf.autoTable.previous.finalY + 30, 'right')
-      this.desctot=this.tot;
-      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoPactado)/100
-      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoProntoPago)/100
-      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoRecogerOrigen)/100
-      this.desctot=this.desctot-(this.desctot*this.clientes.cliente[0].Cln_DescuentoOpcional)/100
-      
+
       pdf.text(this.formatter.format(this.tot-this.desctot), 540, pdf.autoTable.previous.finalY + 44, 'right')
       pdf.text('Descuento: ',340 ,pdf.autoTable.previous.finalY + 44);
       pdf.text(this.formatter.format(this.desctot), 540, pdf.autoTable.previous.finalY + 58, 'right')
@@ -325,14 +340,16 @@ getObjects(obj, key, val) {
       pdf.text(this.formatter.format(this.desctot+(this.desctot*this.iva)/100), 540, pdf.autoTable.previous.finalY + 86, 'right')
       pdf.text('Total con IVA: ',340 ,pdf.autoTable.previous.finalY + 84);
       pdf.text('Observaciones: '+ this.clientes.cliente[0].Cln_Observaciones, 30, pdf.autoTable.previous.finalY + 126)
-      //pdf.save('Venta.pdf'); // Generated PDF         
-      var pdfuri=pdf.output('datauristring')
-      this.sendMail(pdfuri)
-      let snackBarRef = this.snackBar.open('Exito: Venta registrada', 'Cerrar',{duration:2000});
-      
+      pdf.output('dataurlnewwindow'); // Generated PDF         
+      this.pdfuri=pdf.output('datauristring')      
+      this.banderaPdf=true;
 
   //console.log(dataurl);
   //console.log(emailPdf);
       
+  }
+  sendPDF(){
+    this.sendMail(this.pdfuri)
+    this.banderaPdf=false;
   }
 }
