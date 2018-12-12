@@ -240,53 +240,53 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center;" >
       <div fxFlex="1"></div>
-      <div style="padding-right:5%"fxFlex="15"></div>
-      <div style="padding-right:5%"fxFlex="15"></div>
-      <div style="padding-right:5%"fxFlex="25"></div>
-      <div style="padding-right:5%"fxFlex="25">Importe Total:</div>
-      <div fxFlex="10">{{tot | currency:'MXN'}}</div>
+      <div style="padding-right:5%"fxFlex="15" fxFlex.lt-md="5"></div>
+      <div style="padding-right:5%"fxFlex="15"fxFlex.lt-md="5"></div>
+      <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="15"></div>
+      <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="40">Importe Total:</div>
+      <div fxFlex="10"fxFlex.lt-md="25">{{tot | currency:'MXN'}}</div>
       <div fxFlex="1"></div>
       
     </div>
     <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; " *ngIf="desctot>0" >
         <div fxFlex="1"></div>
-        <div style="padding-right:5%"fxFlex="15"></div>
-        <div style="padding-right:5%"fxFlex="15"></div>
-        <div style="padding-right:5%"fxFlex="25"></div>
-        <div style="padding-right:5%"fxFlex="25">Descuento:</div>
-        <div fxFlex="10">{{tot-desctot | currency:'MXN'}}</div>
+        <div style="padding-right:5%"fxFlex="15" fxFlex.lt-md="5"></div>
+        <div style="padding-right:5%"fxFlex="15"fxFlex.lt-md="5"></div>
+        <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="15"></div>
+        <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="40">Descuento:</div>
+        <div fxFlex="10"fxFlex.lt-md="25">{{tot-desctot | currency:'MXN'}}</div>
         <div fxFlex="1"></div>
         
       </div>
       <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; " *ngIf="desctot>0">
           <div fxFlex="1"></div>
-          <div style="padding-right:5%"fxFlex="15"></div>
-          <div style="padding-right:5%"fxFlex="15"></div>
-          <div style="padding-right:5%"fxFlex="25"></div>
-          <div style="padding-right:5%"fxFlex="25">Total con Descuento:</div>
-          <div fxFlex="10">{{desctot | currency:'MXN'}}</div>
+          <div style="padding-right:5%"fxFlex="15" fxFlex.lt-md="5"></div>
+          <div style="padding-right:5%"fxFlex="15"fxFlex.lt-md="5"></div>
+          <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="15"></div>
+          <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="40">Total con Descuento:</div>
+          <div fxFlex="10"fxFlex.lt-md="25">{{desctot | currency:'MXN'}}</div>
           <div fxFlex="1"></div>
           
         </div>
         <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; " >
             <div fxFlex="1"></div>
-            <div style="padding-right:5%"fxFlex="15"></div>
-            <div style="padding-right:5%"fxFlex="15"></div>
-            <div style="padding-right:5%"fxFlex="25"></div>
-            <div style="padding-right:5%"fxFlex="25">IVA</div>
-            <div fxFlex="10" *ngIf="desctot>0">{{desctot*iva/100 | currency:'MXN'}}</div>
-            <div fxFlex="10" *ngIf="desctot==0">{{tot*iva/100 | currency:'MXN'}}</div>
+            <div style="padding-right:5%"fxFlex="15" fxFlex.lt-md="5"></div>
+            <div style="padding-right:5%"fxFlex="15"fxFlex.lt-md="5"></div>
+            <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="15"></div>
+            <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="40">IVA</div>
+            <div fxFlex="10"fxFlex.lt-md="25" *ngIf="desctot>0">{{desctot*iva/100 | currency:'MXN'}}</div>
+            <div fxFlex="10"fxFlex.lt-md="25" *ngIf="desctot==0">{{tot*iva/100 | currency:'MXN'}}</div>
             <div fxFlex="1"></div>
             
           </div>
           <div fxLayout="row" fxLayoutAlign="space-evenly center" style="text-align: center; font-weight: bold" >
               <div fxFlex="1"></div>
-              <div style="padding-right:5%"fxFlex="15"></div>
-              <div style="padding-right:5%"fxFlex="15"></div>
-              <div style="padding-right:5%"fxFlex="25"></div>
-              <div style="padding-right:5%"fxFlex="25">Total con IVA:</div>
-              <div fxFlex="10" *ngIf="desctot>0">{{desctot+desctot*iva/100 | currency:'MXN'}}</div>
-              <div fxFlex="10" *ngIf="desctot==0">{{tot+tot*iva/100 | currency:'MXN'}}</div>
+              <div style="padding-right:5%"fxFlex="15" fxFlex.lt-md="5"></div>
+              <div style="padding-right:5%"fxFlex="15"fxFlex.lt-md="5"></div>
+              <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="15"></div>
+              <div style="padding-right:5%"fxFlex="25"fxFlex.lt-md="40">Total con IVA:</div>
+              <div fxFlex="10"fxFlex.lt-md="25" *ngIf="desctot>0">{{desctot+desctot*iva/100 | currency:'MXN'}}</div>
+              <div fxFlex="10"fxFlex.lt-md="25" *ngIf="desctot==0">{{tot+tot*iva/100 | currency:'MXN'}}</div>
               <div fxFlex="1"></div>
               
             </div>
@@ -294,14 +294,14 @@
 
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       <div fxFlex="1"></div>
-      <div fxFlex="15"style="text-align:center;padding-right:5%"></div>
-      <div fxFlex="15" style="padding-right:5% ">          
+      <div fxFlex="15" fxFlex.lt-md="5"style="text-align:center;padding-right:5%"></div>
+      <div fxFlex="15" fxFlex.lt-md="5"style="padding-right:5% ">          
       </div>  
-      <div fxFlex="40"style="padding-right:5%;">          
+      <div fxFlex="40" fxFlex.lt-md="10"style="padding-right:5%;">          
       </div>
-      <div fxFlex="10"><button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>          
+      <div fxFlex="10"fxFlex.lt-md="35"><button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>          
       </div>
-      <div fxFlex="10"><button color=accent style="text-align: center" mat-flat-button (click)="sendPDF()" *ngIf="banderaPdf">Enviar PDF</button>
+      <div fxFlex="10"fxFlex.lt-md="35"><button color=accent style="text-align: center" mat-flat-button (click)="sendPDF()" *ngIf="banderaPdf">Enviar PDF</button>
       </div>
       <div fxFlex="1"></div>
     </div>
