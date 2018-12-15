@@ -10,13 +10,11 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { SignaturePadModule } from 'angular2-signaturepad';
-import { SignatureFieldComponent } from './signature-field/signature-field.component'
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
-    NavBarComponent,
-    SignatureFieldComponent
+    NavBarComponent,    
   ],
   imports: [
     BrowserModule,

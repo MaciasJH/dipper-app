@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { Observable, of, throwError} from 'rxjs';
 import { tap, map, catchError, retry} from 'rxjs/operators';
-import { EntornoModule } from './entorno/entorno.module'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'text/plain'})
 };
-const entorno = new EntornoModule()
+const host = "diper.no-ip.biz"
+const puerto = 1337
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +29,11 @@ export class GetServiceService {
  // Uses http.get() to load data from a single API endpoint
  getAgente(agente) {
    
-  return this.http.get('http://'+entorno.host+':'+entorno.puerto+'/api/agente/'+agente);
+  return this.http.get('http://'+host+':'+puerto+'/api/agente/'+agente);
 }
 
  getClientes(cliente) {
-  return this.http.get('http://'+entorno.host+':'+entorno.puerto+'/api/clientes/'+cliente);
+  return this.http.get('http://'+host+':'+puerto+'/api/clientes/'+cliente);
 }
   getPrecioP(mueble,lista) {
     return this.http.get('http://187.234.58.207:1337/api/piezas/'+mueble+'/'+lista)
@@ -43,7 +43,7 @@ export class GetServiceService {
 }
   sendMail(mail: string): Observable<string> {
     console.log(mail) 
-    return this.http.post<string>('http://'+entorno.host+':'+entorno.puerto+'/mail',mail, httpOptions)
+    return this.http.post<string>('http://'+host+':'+puerto+'/mail',mail, httpOptions)
     .pipe(
       tap((mail: string) => console.log('added product w/ id= '+mail)),
       catchError(this.handleError<string>('addProduct'))
