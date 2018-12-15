@@ -9,11 +9,14 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { SignatureFieldComponent } from './signature-field/signature-field.component'
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
-    NavBarComponent
+    NavBarComponent,
+    SignatureFieldComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule, ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
+    SignaturePadModule,
     MatButtonModule, MatCheckboxModule, LayoutModule, MatSnackBarModule, MatToolbarModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule, MatGridListModule, MatSelectModule, MatAutocompleteModule],
   providers: [],
   bootstrap: [AppComponent]

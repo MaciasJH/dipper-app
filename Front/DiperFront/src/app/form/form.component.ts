@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ViewChild, QueryList, Component, OnInit, ElementRef } from '@angular/core';
 import { formatDate, NgForOf } from '../../../node_modules/@angular/common';
 import { FormControl } from '@angular/forms';
 import { GetServiceService} from '../get-service.service';
@@ -8,6 +8,8 @@ import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {MatSnackBar} from '@angular/material';
 import { Observable } from 'rxjs';
+import { SignaturePad} from 'angular2-signaturepad/signature-pad';
+
 
 //let listaMuebles: { id: string, desc:string, cant:number, imp:number }[] = [];
 
@@ -28,8 +30,17 @@ export class FormComponent implements OnInit {
   existe = false;
   existe2= false;
   banderaPdf=false;
+  banderaFirma=false;
   muebles = [10];
-  
+  imgFirma;
+
+  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  public signaturePadOptions={
+    'minWidth':2,
+    canvasWidth:  350,
+    canvasHeight: 150
+  };
+
   importe: number[]=[];
   importenew: number[]=[];
   datosMueble: { id: number, tipo: string, cant: number, desc:string, imp: string}[]=[]
@@ -59,7 +70,7 @@ export class FormComponent implements OnInit {
     // the default value for minimumFractionDigits depends on the currency
     // and is usually already 2
   });
-  
+
 constructor(private _getService: GetServiceService, public snackBar: MatSnackBar) {     
     this.jsfecha = formatDate(this.fecha, 'dd/MM/yyyy'/*+' hh:mm a'*/, 'en-US', '-0600');    
   }
@@ -68,7 +79,8 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
       duration: 200,
     });
   }
-  ngOnInit() {
+  
+  ngOnInit() {    
     this.filteredOptions = this.myControl.valueChanges    
     .pipe(
       startWith(''),
@@ -105,14 +117,25 @@ constructor(private _getService: GetServiceService, public snackBar: MatSnackBar
   }
 
 
+  getFirma(){
+    this.imgFirma = this.signaturePad.toDataURL();
+    this.snackBar.open('Firma guardada correctamente', "Cerrar")
+    this.banderaFirma=true;
+  }
+
+  drawClear(){
+    this.signaturePad.clear();
+  }
+
   sendMail(mailObj) {
     this.snackBar.open('Cargando. . .', "",{duration:20000})
     this._getService.sendMail(mailObj)
-    .subscribe(logro => { this.snackBar.open('PDF enviado con exito.', "")},
+    .subscribe(logro => { this.snackBar.open('PDF enviado con exito.', "Cerrar")},
       err => this.snackBar.open('Error: Problema de conexion con el Servidor', 'Cerrar'),
       );
 }
   getAgente(agente){
+    
     this.snackBar.open('Cargando. . .', "",{duration:20000})
     this._getService.getAgente(agente)
       .subscribe(data => {this.agente = data },
@@ -340,7 +363,11 @@ getObjects(obj, key, val) {
       pdf.text(this.formatter.format(this.desctot+(this.desctot*this.iva)/100), 540, pdf.autoTable.previous.finalY + 86, 'right')
       pdf.text('Total con IVA: ',340 ,pdf.autoTable.previous.finalY + 84);
       pdf.text('Observaciones: '+ this.clientes.cliente[0].Cln_Observaciones, 30, pdf.autoTable.previous.finalY + 126)
-      pdf.output('dataurlnewwindow'); // Generated PDF         
+      pdf.text('______________________________', pdf.internal.pageSize.getWidth()/2, pdf.autoTable.previous.finalY + 210, 'center')
+      pdf.text('Firma del Cliente', pdf.internal.pageSize.getWidth()/2, pdf.autoTable.previous.finalY + 230, 'center')
+      pdf.addImage(this.imgFirma, 'JPEG', pdf.internal.pageSize.getWidth()/2-87, pdf.autoTable.previous.finalY + 150, 175, 75)      
+      this.snackBar.open('PDF descargado con exito, revise sus descargas.', "Cerrar")
+      pdf.save('Venta '+this.clientes.cliente[0].Cln_Nombre+" "+this.clientes.cliente[0].Cln_Apellido+" "+this.jsfecha); // Generated PDF         
       this.pdfuri=pdf.output('datauristring')      
       this.banderaPdf=true;
 

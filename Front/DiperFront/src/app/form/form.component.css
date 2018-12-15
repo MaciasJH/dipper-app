@@ -47,3 +47,18 @@
     align-self: center;
     width: 80%;
   }
+  .sig-container {
+    border-style: solid;
+    border-width: 2px;
+    width: 90%;
+    height: 60%;
+    margin-left: 5%;
+    margin-right: 5%;
+    cursor: pointer;
+  }
+  
+  .sig-container canvas {
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+  }

@@ -7,7 +7,6 @@
 
 	<title>Diper</title>
 </head>
-<div id="todo">
 <header style="background-color: #ffffff;">
 	<div fxLayout="row" fxLayoutAlign="start center" class="clase1" style="background-color: #ffffff;">
 		<div class="clase2" fxFlex="30" >
@@ -52,6 +51,7 @@
         <button #ocultar fxFlex="10" color=accent *ngIf="visibilidad2" mat-flat-button (click)="visibilidad2 = !visibilidad2; agente=null;">{{visibilidad2 ? 'Ocultar' : 'Buscar'}}</button>
       </div>
       <hr>
+      
     <br>
     <form name="list_Clientes" *ngIf="visibilidad2 && existe2">
     
@@ -152,7 +152,7 @@
         <input matInput placeholder="Fecha" value="Nombre" readonly="true" >                    
       </mat-form-field>
       
-      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0);myControl.value='';options=[]; banderaPdf=false; importe.push(0)" *ngIf="datosMueble.length==muebles.length">+</button>
+      <button fxFlex="10" color=accent style="margin-left: 10px" mat-flat-button (click)="muebles.push(0);myControl.value='';options=[]; banderaPdf=false; importe.push(0); resize()" *ngIf="datosMueble.length==muebles.length">+</button>
       <button fxFlex="10" color=warn style="margin-left: 10px" mat-flat-button (click)="muebles.pop(muebles.length); datosMueble.pop(datosMueble.length); importenew.pop(importenew.length); importe.pop(importe.length);banderaPdf=false" *ngIf="muebles.length>0">-</button>    
       </div>
       <hr>
@@ -291,26 +291,33 @@
               
             </div>
     <hr>
-
-    <div fxLayout="row" fxLayoutAlign="space-evenly center">
-      <div fxFlex="1"></div>
-      <div fxFlex="15" fxFlex.lt-md="5"style="text-align:center;padding-right:5%"></div>
-      <div fxFlex="15" fxFlex.lt-md="5"style="padding-right:5% ">          
+    <div *ngIf="datosMueble.length>0">
+    <div class="sig-container" id="signature-pad" #signpad>
+      <div class="sig-body">
+          <signature-pad [options]="signaturePadOptions" #campoFirma></signature-pad>
       </div>  
-      <div fxFlex="40" fxFlex.lt-md="10"style="padding-right:5%;">          
+      
+        <br>
       </div>
-      <div fxFlex="10"fxFlex.lt-md="35"><button color=accent style="text-align: center" mat-flat-button (click)="genPDF()" *ngIf="datosMueble.length>0">Generar PDF</button>          
-      </div>
-      <div fxFlex="10"fxFlex.lt-md="35"><button color=accent style="text-align: center" mat-flat-button (click)="sendPDF()" *ngIf="banderaPdf">Enviar PDF</button>
-      </div>
-      <div fxFlex="1"></div>
+      <div fxLayout="row" fxLayoutAlign="space-evenly center">
+          <button fxFlex="10"fxFlex.lt-md="35" color=accent style="text-align: center; margin-right: 10px" mat-flat-button (click)="getFirma()" >Confirmar</button>              
+          <button fxFlex="10"fxFlex.lt-md="35" color=accent style="text-align: center" mat-flat-button (click)="banderaFirma=false; drawClear();">Limpiar</button>              
+        </div>
+        
+    <hr>
+  </div>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+      
+      <button fxFlex="10"fxFlex.lt-md="35" color=accent style="text-align: center;margin-right: 10px" mat-flat-button (click)="genPDF()" *ngIf="banderaFirma">Generar PDF</button>          
+      
+      <button fxFlex="10"fxFlex.lt-md="35" color=accent style="text-align: center" mat-flat-button (click)="sendPDF()" *ngIf="banderaPdf">Enviar PDF</button>
+      
     </div>
 <br>
     </div>
   
  <br><br><br>
 </body>
-</div>
 <footer>
 </footer>
 </html>
