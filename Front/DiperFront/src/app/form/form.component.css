@@ -50,11 +50,12 @@
   .sig-container {
     border-style: solid;
     border-width: 2px;
-    width: 90%;
-    height: 60%;
+    width: 350px;
+    height: 150px;
     margin-left: 5%;
     margin-right: 5%;
     cursor: pointer;
+    position: relative;    
   }
   
   .sig-container canvas {

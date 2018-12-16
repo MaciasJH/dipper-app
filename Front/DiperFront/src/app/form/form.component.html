@@ -292,7 +292,9 @@
             </div>
     <hr>
     <div *ngIf="datosMueble.length>0">
-    <div class="sig-container" id="signature-pad" #signpad>
+    <h3>Firma del Cliente</h3>
+    <div style="align-content:center">
+    <div class="sig-container" style="align-content: center" id="signature-pad" #signpad>
       <div class="sig-body">
           <signature-pad [options]="signaturePadOptions" #campoFirma></signature-pad>
       </div>  
@@ -305,7 +307,7 @@
         </div>
         
     <hr>
-  </div>
+  </div></div>
     <div fxLayout="row" fxLayoutAlign="space-evenly center">
       
       <button fxFlex="10"fxFlex.lt-md="35" color=accent style="text-align: center;margin-right: 10px" mat-flat-button (click)="genPDF()" *ngIf="banderaFirma">Generar PDF</button>          
