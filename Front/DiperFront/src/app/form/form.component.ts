@@ -354,13 +354,28 @@ getObjects(obj, key, val) {
       pdf.text('Importe Total: ',340 ,pdf.autoTable.previous.finalY + 30);
       pdf.text(this.formatter.format(this.tot), 540, pdf.autoTable.previous.finalY + 30, 'right')
 
-      pdf.text(this.formatter.format(this.tot-this.desctot), 540, pdf.autoTable.previous.finalY + 44, 'right')
+
+      var ivaCorr=0
+      var totIvaCorr=0
+      var descCorr=0;
+      if(this.desctot==0){
+        ivaCorr=this.tot*this.iva/100
+        totIvaCorr=this.tot+this.tot*this.iva/100
+        descCorr=0;
+      }
+      else{
+        ivaCorr=(this.desctot*this.iva)/100;
+        totIvaCorr=(this.desctot+(this.desctot*this.iva)/100)
+        descCorr=this.tot-this.desctot;
+      }
+
+      pdf.text(this.formatter.format(descCorr), 540, pdf.autoTable.previous.finalY + 44, 'right')
       pdf.text('Descuento: ',340 ,pdf.autoTable.previous.finalY + 44);
-      pdf.text(this.formatter.format(this.desctot), 540, pdf.autoTable.previous.finalY + 58, 'right')
+      pdf.text(this.formatter.format(this.tot-descCorr), 540, pdf.autoTable.previous.finalY + 58, 'right')
       pdf.text('Total con Descuento: ',340 ,pdf.autoTable.previous.finalY + 58);
-      pdf.text(this.formatter.format((this.desctot*this.iva)/100), 540, pdf.autoTable.previous.finalY + 72, 'right')
+      pdf.text(this.formatter.format(ivaCorr), 540, pdf.autoTable.previous.finalY + 72, 'right')
       pdf.text('IVA: ',340 ,pdf.autoTable.previous.finalY + 72);
-      pdf.text(this.formatter.format(this.desctot+(this.desctot*this.iva)/100), 540, pdf.autoTable.previous.finalY + 86, 'right')
+      pdf.text(this.formatter.format(totIvaCorr), 540, pdf.autoTable.previous.finalY + 86, 'right')
       pdf.text('Total con IVA: ',340 ,pdf.autoTable.previous.finalY + 84);
       pdf.text('Observaciones: '+ this.clientes.cliente[0].Cln_Observaciones, 30, pdf.autoTable.previous.finalY + 126)
       pdf.text('______________________________', pdf.internal.pageSize.getWidth()/2, pdf.autoTable.previous.finalY + 210, 'center')
